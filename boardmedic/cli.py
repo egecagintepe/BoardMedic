@@ -198,6 +198,7 @@ def cmd_detect_serial() -> None:
 
 
 @detect_app.command("network")
+@probe_app.command("network")
 def cmd_detect_network() -> None:
     """Detect network interfaces."""
     from boardmedic.core.runner import CommandRunner

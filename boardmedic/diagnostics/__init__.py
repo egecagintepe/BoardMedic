@@ -158,4 +158,8 @@ class Diagnostics:
         # Copy runner history
         session.commands = self.runner.history
 
+        # Persist session and findings
+        session_mgr.save_session_json()
+        session_mgr.save_findings_json()
+
         return session

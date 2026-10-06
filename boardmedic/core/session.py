@@ -95,7 +95,7 @@ class Session:
         self.ensure_dirs()
         path = self.session_dir / "session.json"
         path.write_text(
-            self.data.model_dump_json(indent=2, mode="json"),
+            self.data.model_dump_json(indent=2),
             encoding="utf-8",
         )
         return path

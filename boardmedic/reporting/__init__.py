@@ -50,10 +50,10 @@ def anonymize_text(text: str) -> str:
 # ---------------------------------------------------------------------------
 
 _SEVERITY_EMOJI = {
-    Severity.CRITICAL: "🔴",
-    Severity.ERROR: "[WARN]",
-    Severity.WARNING: "[INFO]",
-    Severity.INFO: "🔵",
+    Severity.CRITICAL: "[CRITICAL]",
+    Severity.ERROR: "[ERROR]",
+    Severity.WARNING: "[WARN]",
+    Severity.INFO: "[INFO]",
 }
 
 _STAGE_STATUS_LABEL = {
@@ -270,7 +270,7 @@ def generate_markdown_report(
                 lines.append(f"> {note}")
             lines.append("")
         for step in plan.steps:
-            dest_badge = " [!]️ **DESTRUCTIVE**" if step.destructive else ""
+            dest_badge = " [!] **DESTRUCTIVE**" if step.destructive else ""
             disrupt_badge = " [*] DISRUPTIVE" if step.disruptive else ""
             lines.append(f"### Step {step.order}: {step.title}{dest_badge}{disrupt_badge}")
             lines.append("")

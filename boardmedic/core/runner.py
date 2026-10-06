@@ -240,8 +240,13 @@ class CommandRunner:
             result.error_message = "PowerShell not available on this platform"
             self._history.append(result)
             return result
+        full_script = (
+            "[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; "
+            "$OutputEncoding = [System.Text.Encoding]::UTF8; "
+            + script
+        )
         return self.run(
-            ["powershell", "-NoProfile", "-NonInteractive", "-Command", script],
+            ["powershell", "-NoProfile", "-NonInteractive", "-Command", full_script],
             timeout=timeout,
             tool_name=tool_name,
         )
