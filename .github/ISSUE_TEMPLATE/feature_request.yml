@@ -1,0 +1,33 @@
+name: Feature request
+description: Suggest a capability, board profile, probe or recovery improvement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What engineering problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Hardware / protocol evidence
+      description: For board support, include public datasheets, IDs, controller paths, sanitized logs or reproducible fixtures where possible.
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Does this affect destructive recovery?
+      options:
+        - "No"
+        - "Possibly"
+        - "Yes"
+    validations:
+      required: true

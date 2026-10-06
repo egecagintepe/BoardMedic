@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a reproducible BoardMedic defect
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve BoardMedic. Remove or anonymize credentials, private keys, tokens, private IPs and company-sensitive data before posting logs.
+  - type: input
+    id: version
+    attributes:
+      label: BoardMedic version / commit
+      placeholder: v0.1.0 or commit SHA
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Host platform
+      options:
+        - Windows 10/11
+        - Ubuntu/Debian Linux
+        - Other Linux
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command or workflow
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Attach minimal logs, fixture data or screenshots needed to reproduce the issue.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety
+      options:
+        - label: I removed secrets and private diagnostic data.
+          required: true
+        - label: This report does not instruct users to bypass BoardMedic safety guards.
+          required: true
