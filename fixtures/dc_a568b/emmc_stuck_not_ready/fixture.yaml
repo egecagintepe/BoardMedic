@@ -1,0 +1,11 @@
+profile_id: dc-a568b
+description: >
+  DC-A568B / RK3568 board with internal eMMC stuck in not-ready state.
+  Linux boots from SD card. Internal eMMC (fe310000.mmc) responds to CMD1
+  but READY bit is never set. This is the primary motivating case for BoardMedic.
+
+# Root disk is the SD card (mmcblk0), NOT the internal eMMC
+root_disk: /dev/mmcblk0
+
+# No internal eMMC block device present (it never enumerated)
+block_devices: []

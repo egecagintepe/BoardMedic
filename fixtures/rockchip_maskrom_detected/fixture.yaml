@@ -1,0 +1,7 @@
+profile_id: dc-a568b
+description: >
+  DC-A568B board with Rockchip RK3568 in MaskROM mode.
+  No bootloader found on storage. Device enumerated via USB OTG.
+
+root_disk: /dev/sda
+block_devices: []

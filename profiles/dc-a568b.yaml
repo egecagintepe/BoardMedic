@@ -1,0 +1,223 @@
+# BoardMedic Board Profile
+# DC-A568B / RK3568 Industrial Board
+#
+# Manufacturer: Dingchang / DCSMT / Zhitongli
+# PCB: DC-A568B V01
+# Aliases: DC_A568, ZTL-A568
+# SoC: Rockchip RK3568
+
+id: dc-a568b
+display_name: "DC-A568B / RK3568 Industrial Board"
+
+aliases:
+  - dc_a568
+  - ztl-a568
+  - rk3568-dc-a568b
+
+vendor: "Dingchang / DCSMT / Zhitongli"
+pcb: "DC-A568B"
+revision: "V01"
+
+soc_family: "Rockchip RK3568"
+soc_model: "RK3568"
+cpu_arch: "arm64"
+cpu_cores: 4
+typical_ram_gb: 2.0
+
+# ---------------------------------------------------------------------------
+# USB identifiers
+# ---------------------------------------------------------------------------
+# Rockchip RK3568 MaskROM: VID 0x2207 PID 0x350A
+# Rockchip RK3568 Loader:  VID 0x2207 PID 0x350B
+
+usb_ids:
+  - vid: "2207"
+    pid: "350a"
+    description: "RK3568 MaskROM"
+    mode: "maskrom"
+  - vid: "2207"
+    pid: "350b"
+    description: "RK3568 Loader"
+    mode: "loader"
+
+rockchip_modes:
+  - maskrom
+  - loader
+
+# ---------------------------------------------------------------------------
+# Serial / UART
+# ---------------------------------------------------------------------------
+# 3.3V TTL debug header
+# Primary baud: 1500000 (some boards also 115200)
+
+serial:
+  voltage: "3.3V TTL"
+  baud_candidates:
+    - 1500000
+    - 115200
+    - 921600
+  data_bits: 8
+  parity: "N"
+  stop_bits: 1
+  notes: >
+    Debug UART header is 3-pin (GND, TX, RX) at 3.3V TTL levels.
+    Do NOT assume UART hardware is connected unless confirmed.
+    Primary baud rate for RK3568 Linux is 1500000.
+
+# ---------------------------------------------------------------------------
+# Storage expectations
+# ---------------------------------------------------------------------------
+# Internal eMMC: ~32GB (marketed as 32GB)
+# Realistic detection window: 20-40 GiB
+# MMC controller: fe310000.mmc (observed in Linux kernel)
+# Status: non-removable
+
+storage:
+  - type: "emmc"
+    label: "Internal eMMC (32GB)"
+    min_gib: 20.0
+    max_gib: 40.0
+    removable: false
+    bus_path: "fe310000.mmc"
+    mmc_host: "mmc1"
+    notes: >
+      Internal eMMC is typically 32GB but may present between 29-31 GiB
+      after formatting overhead. The detection window of 20-40 GiB
+      accounts for manufacturing variance. The controller address
+      fe310000.mmc is the observed eMMC host on RK3568.
+
+  - type: "sd"
+    label: "MicroSD Card (boot/recovery)"
+    min_gib: 4.0
+    max_gib: 2048.0
+    removable: true
+    notes: >
+      MicroSD card slot is available and confirmed to boot Linux.
+      Used as primary recovery medium. Size varies per inserted card.
+      A 512GB SD will present as ~461 GiB - this must NOT be confused
+      with the 32GB internal eMMC.
+
+# ---------------------------------------------------------------------------
+# Boot media
+# ---------------------------------------------------------------------------
+
+boot_media:
+  - type: emmc
+    priority: 0
+    notes: "Primary boot from internal eMMC (Android or Linux)"
+  - type: sd
+    priority: 1
+    notes: "SD card boot confirmed working - used for Linux recovery"
+  - type: rockchip_usb
+    priority: 2
+    notes: "USB OTG recovery via Rockchip loader/MaskROM"
+
+# ---------------------------------------------------------------------------
+# Device tree
+# ---------------------------------------------------------------------------
+
+known_dtb:
+  - "rk3568-ztl-a568.dtb"
+  - "rk3568-ztl-a568-v2.dtb"
+
+# ---------------------------------------------------------------------------
+# MMC controllers
+# ---------------------------------------------------------------------------
+
+known_mmc_controllers:
+  - "fe310000.mmc"
+  - "fe2b0000.mmc"
+
+# ---------------------------------------------------------------------------
+# Recovery capabilities
+# ---------------------------------------------------------------------------
+
+recovery_capabilities:
+  - method: sd_boot
+    notes: "SD card Linux boot confirmed working on this board"
+    requires: []
+  - method: uart
+    notes: "UART debug header available at 3.3V TTL, 1500000 baud"
+    requires: ["3.3V TTL adapter"]
+  - method: rockchip_usb
+    notes: "USB OTG recovery via RK3568 MaskROM/Loader mode"
+    requires: ["USB OTG cable", "rkdeveloptool or upgrade_tool"]
+  - method: ssh
+    notes: "SSH available when booted from SD into Linux"
+    requires: ["network connection"]
+  - method: linux_userspace
+    notes: "When booted from SD, Linux userspace recovery tools available"
+    requires: ["SD card with Linux"]
+
+# ---------------------------------------------------------------------------
+# Known failure signatures (regex patterns matched against dmesg)
+# ---------------------------------------------------------------------------
+
+failure_signatures:
+  - id: "emmc_stuck_busy"
+    pattern: "Card stuck being busy"
+    description: "eMMC card reports busy but never becomes ready"
+    severity: "error"
+    finding_id: "EMMC_INIT_NOT_READY"
+  - id: "emmc_init_failed"
+    pattern: "Failed to initialize a non-removable card"
+    description: "Linux MMC driver gave up initializing the internal eMMC"
+    severity: "error"
+    finding_id: "EMMC_INIT_NOT_READY"
+  - id: "emmc_ocr_not_ready"
+    pattern: "0x40ff8080"
+    description: "OCR value with READY bit not set (bit 31 = 0)"
+    severity: "error"
+    finding_id: "EMMC_INIT_NOT_READY"
+
+# ---------------------------------------------------------------------------
+# Known kernel messages
+# ---------------------------------------------------------------------------
+
+known_kernel_messages:
+  - "mmc1: Card stuck being busy! Try to poll CMD13..."
+  - "mmc1: Failed to initialize a non-removable card"
+  - "mmc1: new high speed MMC card at address 0001"
+  - "mmc1: mmc_select_hs400 failed, error -84"
+  - "fe310000.mmc: Got data interrupt 0x00200002 even though no data operation was in progress"
+
+known_boot_messages:
+  - "U-Boot 2021.04"
+  - "Board: RK3568 EVB RK817 PMIC"
+  - "Starting kernel ..."
+
+# ---------------------------------------------------------------------------
+# Diagnostic notes
+# ---------------------------------------------------------------------------
+
+notes: >
+  DC-A568B V01 with RK3568 SoC.
+  Board has been confirmed to boot Linux from SD card successfully,
+  indicating CPU, RAM, SD controller, and kernel are functional.
+  Internal eMMC (fe310000.mmc) has been observed to fail initialization
+  with repeated OCR CMD1 responses of 0x40ff8080, where the READY bit
+  (bit 31) is never set despite hundreds of CMD1 attempts at frequencies
+  from 100kHz to 400kHz. This failure pattern is consistent with
+  eMMC initialization failure but does NOT conclusively prove NAND failure.
+
+safe_assumptions:
+  - "SD card boot path is functional"
+  - "CPU and RAM are operational (Linux boots from SD)"
+  - "USB OTG port is present and Rockchip recovery may be possible"
+  - "Network connectivity may be available via Ethernet"
+
+unsafe_assumptions:
+  - "Internal eMMC NAND is definitely dead (NOT proven by initialization failure alone)"
+  - "The 512GB SD card is the internal eMMC"
+  - "The device cannot be recovered without hardware replacement"
+
+# ---------------------------------------------------------------------------
+# Rules enabled for this profile
+# ---------------------------------------------------------------------------
+
+enabled_rules:
+  - EMMC_STUCK_NOT_READY
+  - EMMC_HOST_NOT_PRESENT
+  - ROCKCHIP_MASKROM_DETECTED
+  - ROCKCHIP_LOADER_DETECTED
+  - EMMC_HEALTHY

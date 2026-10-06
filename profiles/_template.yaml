@@ -1,0 +1,179 @@
+# BoardMedic Board Profile Template
+# Copy this file and fill in the values for your board.
+# Delete this comment block when done.
+#
+# Naming convention: lowercase-with-hyphens.yaml
+# Example: my-sbc-v2.yaml
+#
+# All fields marked (required) must be present.
+# All other fields are optional but recommended.
+
+# (required) Unique identifier. lowercase alphanumeric with hyphens only.
+id: "my-board-id"
+
+# (required) Human-readable display name
+display_name: "My Board Display Name"
+
+# Alternative names this board may be known by
+aliases:
+  - "alternative-name-1"
+  - "alternative-name-2"
+
+# Manufacturer/vendor
+vendor: "Vendor Name"
+
+# PCB silkscreen identifier
+pcb: "MY-PCB-001"
+
+# PCB revision
+revision: "V1.0"
+
+# (required) SoC family name
+soc_family: "Rockchip RK3568"  # or "Allwinner H6", "Amlogic S905X4", etc.
+
+# Specific SoC model
+soc_model: "RK3568"
+
+# CPU architecture (arm, arm64, x86, riscv, etc.)
+cpu_arch: "arm64"
+
+# Number of CPU cores
+cpu_cores: 4
+
+# Typical installed RAM in GB
+typical_ram_gb: 4.0
+
+# ---------------------------------------------------------------------------
+# USB - Add Rockchip/other vendor USB IDs if applicable
+# VID and PID must be 4 hex digits (lowercase)
+# ---------------------------------------------------------------------------
+usb_ids:
+  - vid: "2207"
+    pid: "350a"
+    description: "RK3568 MaskROM"
+    mode: "maskrom"  # maskrom | loader | normal | adb | fastboot
+
+# Rockchip-specific recovery modes (maskrom | loader)
+rockchip_modes:
+  - maskrom
+  - loader
+
+# ---------------------------------------------------------------------------
+# Serial/UART
+# ---------------------------------------------------------------------------
+serial:
+  voltage: "3.3V TTL"  # or "1.8V TTL", "RS232", etc.
+  baud_candidates:
+    - 115200
+    - 1500000
+  data_bits: 8
+  parity: "N"  # N=none, E=even, O=odd
+  stop_bits: 1
+  notes: "Debug UART header - 3 pins (GND, TX, RX)"
+
+# ---------------------------------------------------------------------------
+# Storage expectations
+# Define what storage devices you expect to find
+# ---------------------------------------------------------------------------
+storage:
+  - type: "emmc"          # emmc | sd | nand | nor
+    label: "Internal eMMC"
+    min_gib: 14.0          # Minimum expected size (conservative)
+    max_gib: 60.0          # Maximum expected size (conservative)
+    removable: false       # Internal eMMC is non-removable
+    bus_path: "fe310000.mmc"  # Linux kernel MMC controller address
+    mmc_host: "mmc1"      # Linux mmc host name
+    notes: "Internal eMMC storage"
+
+  - type: "sd"
+    label: "MicroSD Card"
+    min_gib: 2.0
+    max_gib: 2048.0
+    removable: true
+    notes: "MicroSD slot"
+
+# ---------------------------------------------------------------------------
+# Boot media priority
+# ---------------------------------------------------------------------------
+boot_media:
+  - type: emmc
+    priority: 0
+    notes: "Primary boot from internal eMMC"
+  - type: sd
+    priority: 1
+    notes: "SD card boot (recovery/alternative)"
+  - type: rockchip_usb
+    priority: 2
+    notes: "USB OTG recovery"
+
+# ---------------------------------------------------------------------------
+# Device tree blobs
+# ---------------------------------------------------------------------------
+known_dtb:
+  - "rk3568-my-board.dtb"
+
+# ---------------------------------------------------------------------------
+# MMC controller addresses (from Linux dmesg/sysfs)
+# ---------------------------------------------------------------------------
+known_mmc_controllers:
+  - "fe310000.mmc"
+
+# ---------------------------------------------------------------------------
+# Recovery methods available for this board
+# ---------------------------------------------------------------------------
+recovery_capabilities:
+  - method: sd_boot
+    notes: "Boot from SD card"
+    requires: []
+  - method: uart
+    notes: "UART debug console"
+    requires: ["3.3V TTL adapter"]
+  - method: rockchip_usb
+    notes: "USB OTG recovery"
+    requires: ["USB OTG cable", "rkdeveloptool"]
+  - method: ssh
+    notes: "SSH when booted into Linux"
+    requires: ["network connection"]
+
+# ---------------------------------------------------------------------------
+# Known failure signatures (regex patterns in dmesg/kernel logs)
+# ---------------------------------------------------------------------------
+failure_signatures:
+  - id: "example_emmc_failure"
+    pattern: "Card stuck being busy"
+    description: "eMMC initialization failure"
+    severity: "error"
+
+# ---------------------------------------------------------------------------
+# Known kernel log messages (for reference/matching)
+# ---------------------------------------------------------------------------
+known_kernel_messages:
+  - "mmc1: Card stuck being busy! Try to poll CMD13..."
+  - "mmc1: Failed to initialize a non-removable card"
+
+known_boot_messages:
+  - "U-Boot 2021.04"
+  - "Starting kernel ..."
+
+# ---------------------------------------------------------------------------
+# Free-form notes about this board
+# ---------------------------------------------------------------------------
+notes: >
+  Add free-form notes about this board here.
+  Include known quirks, failure modes, recovery tips, etc.
+
+safe_assumptions:
+  - "List things that are safe to assume about this board"
+
+unsafe_assumptions:
+  - "List things that would be WRONG to assume"
+
+# ---------------------------------------------------------------------------
+# Diagnostic rules to enable for this profile
+# ---------------------------------------------------------------------------
+enabled_rules:
+  - EMMC_STUCK_NOT_READY
+  - EMMC_HOST_NOT_PRESENT
+  - ROCKCHIP_MASKROM_DETECTED
+  - ROCKCHIP_LOADER_DETECTED
+  - EMMC_HEALTHY

@@ -1,0 +1,12 @@
+[    0.000000] Booting Linux on physical CPU 0x0000000000
+[    1.456789] mmc0: SDHCI controller on fe2b0000.mmc [fe2b0000.mmc] using ADMA
+[    1.678901] mmc1: SDHCI controller on fe310000.mmc [fe310000.mmc] using ADMA
+[    1.890123] mmc0: new ultra high speed SDR104 SDHC card at address 0001
+[    1.901234] mmcblk0: mmc0:0001 SD64G 468 GiB
+[    1.912345] mmcblk0: p1 p2
+[    2.100000] mmc1: new high speed MMC card at address 0001
+[    2.200000] mmcblk1: mmc1:0001 CXBLLC 29.1 GiB
+[    2.300000] mmcblk1boot0: mmc1:0001 CXBLLC 4.00 MiB
+[    2.400000] mmcblk1boot1: mmc1:0001 CXBLLC 4.00 MiB
+[    6.000000] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode
+[    6.100000] VFS: Mounted root (ext4 filesystem) on device 179:2

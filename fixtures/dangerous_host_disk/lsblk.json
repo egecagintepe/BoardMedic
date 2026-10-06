@@ -1,0 +1,47 @@
+{
+  "blockdevices": [
+    {
+      "name": "sda",
+      "path": "/dev/sda",
+      "model": "Samsung SSD 870",
+      "serial": "S12345678",
+      "size": "500107862016",
+      "rota": false,
+      "rm": false,
+      "hotplug": false,
+      "type": "disk",
+      "tran": "sata",
+      "mountpoint": null,
+      "mountpoints": [null],
+      "label": null,
+      "uuid": null,
+      "fstype": null,
+      "pkname": null,
+      "vendor": "ATA",
+      "children": [
+        {
+          "name": "sda1",
+          "path": "/dev/sda1",
+          "size": "536870912",
+          "type": "part",
+          "fstype": "vfat",
+          "label": "EFI",
+          "uuid": "AAAA-1111",
+          "mountpoint": "/boot/efi",
+          "mountpoints": ["/boot/efi"]
+        },
+        {
+          "name": "sda2",
+          "path": "/dev/sda2",
+          "size": "499570991104",
+          "type": "part",
+          "fstype": "ext4",
+          "label": "root",
+          "uuid": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee",
+          "mountpoint": "/",
+          "mountpoints": ["/"]
+        }
+      ]
+    }
+  ]
+}

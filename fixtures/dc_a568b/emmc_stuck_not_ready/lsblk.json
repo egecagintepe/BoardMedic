@@ -1,0 +1,47 @@
+{
+  "blockdevices": [
+    {
+      "name": "mmcblk0",
+      "path": "/dev/mmcblk0",
+      "model": null,
+      "serial": null,
+      "size": "503316480000",
+      "rota": false,
+      "rm": true,
+      "hotplug": true,
+      "type": "disk",
+      "tran": "mmc",
+      "mountpoint": null,
+      "mountpoints": [null],
+      "label": null,
+      "uuid": null,
+      "fstype": null,
+      "pkname": null,
+      "vendor": null,
+      "children": [
+        {
+          "name": "mmcblk0p1",
+          "path": "/dev/mmcblk0p1",
+          "size": "536870912",
+          "type": "part",
+          "fstype": "vfat",
+          "label": "boot",
+          "uuid": "ABCD-1234",
+          "mountpoint": "/boot",
+          "mountpoints": ["/boot"]
+        },
+        {
+          "name": "mmcblk0p2",
+          "path": "/dev/mmcblk0p2",
+          "size": "502779609088",
+          "type": "part",
+          "fstype": "ext4",
+          "label": "rootfs",
+          "uuid": "12345678-1234-1234-1234-123456789012",
+          "mountpoint": "/",
+          "mountpoints": ["/"]
+        }
+      ]
+    }
+  ]
+}

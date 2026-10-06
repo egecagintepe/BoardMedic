@@ -1,0 +1,99 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boardmedic"
+version = "0.1.0"
+description = "Cross-platform embedded board diagnostics and recovery toolkit"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+authors = [{ name = "BoardMedic Contributors" }]
+keywords = ["embedded", "diagnostics", "recovery", "rockchip", "eMMC", "android", "linux"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: System :: Hardware",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "PyYAML>=6.0",
+    "pyserial>=3.5",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.4.0",
+]
+usb = [
+    "pyusb>=1.2.0",
+]
+
+[project.scripts]
+boardmedic = "boardmedic.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/boardmedic/boardmedic"
+Repository = "https://github.com/boardmedic/boardmedic"
+Issues = "https://github.com/boardmedic/boardmedic/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["boardmedic*"]
+
+[tool.setuptools.package-data]
+boardmedic = ["py.typed"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["."]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "PIE", "PT", "RET", "SIM", "RUF"]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # do not perform function calls in default arguments (typer uses this)
+    "UP007",  # use X | Y (keep Optional for clarity)
+    "RET504", # unnecessary assignment before return
+    "RUF012", # mutable class default on declarative models/rules
+    "SIM102", # collapsible if statements
+    "SIM105", # suppress contextlib
+    "UP042",  # str, Enum inheritance
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PT011", "RUF059"]
+"**/__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.coverage.run]
+source = ["boardmedic"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]

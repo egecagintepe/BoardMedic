@@ -1,0 +1,8 @@
+profile_id: null
+description: >
+  Host PC with a single SATA SSD containing the running OS.
+  This fixture tests that BoardMedic correctly protects the host disk
+  and refuses destructive operations against it.
+
+root_disk: /dev/sda
+block_devices: []

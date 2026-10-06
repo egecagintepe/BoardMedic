@@ -1,0 +1,50 @@
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x412fd050]
+[    0.000000] Linux version 5.10.110 (root@buildserver) (aarch64-linux-gnu-gcc 9.3.0)
+[    0.000000] Machine model: ZTL-A568 RK3568 Board
+[    1.234567] rk3568-pinctrl fe000000.pinctrl: initialized Rockchip pin control
+[    1.456789] mmc0: SDHCI controller on fe2b0000.mmc [fe2b0000.mmc] using ADMA
+[    1.678901] mmc1: SDHCI controller on fe310000.mmc [fe310000.mmc] using ADMA
+[    1.890123] mmc0: new ultra high speed SDR104 SDHC card at address 0001
+[    1.901234] mmcblk0: mmc0:0001 SD64G 468 GiB
+[    1.912345] mmcblk0: p1 p2
+[    2.100000] mmc1: queuing unknown CIS tuple 0x80 (2 bytes)
+[    2.200000] mmc1: trying to init card at 400kHz...
+[    2.201000] mmc1: starting CMD1 OCR probe loop
+[    2.202000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.203000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.204000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.300000] mmc1: trying to init card at 300kHz...
+[    2.400000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.500000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.600000] mmc1: trying to init card at 200kHz...
+[    2.700000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.800000] mmc1: CMD1 response: ocr=0x40ff8080
+[    2.900000] mmc1: trying to init card at 100kHz...
+[    3.000000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.100000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.200000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.300000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.400000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.500000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.600000] mmc1: CMD1 response: ocr=0x40ff8080
+[    3.700000] mmc1: Card stuck being busy! Try to poll CMD13...
+[    3.800000] mmc1: Card stuck being busy! Try to poll CMD13...
+[    3.900000] mmc1: Card stuck being busy! Try to poll CMD13...
+[    4.000000] mmc1: Card stuck being busy! Try to poll CMD13...
+[    4.100000] mmc1: error -110 whilst initialising MMC card
+[    4.200000] mmc1: Failed to initialize a non-removable card
+[    4.300000] mmc1: Card stuck being busy! Try to poll CMD13...
+[    4.400000] mmc1: error -110 whilst initialising MMC card
+[    4.500000] mmc1: Failed to initialize a non-removable card
+[    5.000000] NET: Registered protocol family 10
+[    5.100000] sit: IPv6, IPv4 and IP protocol driver
+[    5.200000] ip6_gre: GRE over IPv6 tunneling driver
+[    6.000000] EXT4-fs (mmcblk0p2): mounted filesystem with ordered data mode
+[    6.100000] VFS: Mounted root (ext4 filesystem) on device 179:2
+[    6.200000] devtmpfs: mounted
+[    8.000000] systemd[1]: Detected architecture arm64
+[    8.100000] systemd[1]: Set hostname to rk3568-board
+[   10.000000] rk_gmac-dwmac fe010000.ethernet: eth0: renamed from eth0
+[   10.100000] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   12.000000] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   12.100000] eth0: Link is Up - 1Gbps/Full - flow control rx/tx

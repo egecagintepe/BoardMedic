@@ -1,0 +1,9 @@
+profile_id: dc-a568b
+description: >
+  DC-A568B board in a healthy state: SD card (recovery) and internal eMMC
+  both enumerated. eMMC block device is present and accessible.
+  Used to verify healthy MMC is not misclassified as failed.
+
+root_disk: /dev/mmcblk0
+block_devices:
+  - /dev/mmcblk1
