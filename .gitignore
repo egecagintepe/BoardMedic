@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# BoardMedic runtime output
+boardmedic-sessions/
+sessions/
+reports/private/
+logs/
+*.log
+
+# Firmware / raw storage / recovery artifacts
+firmware/
+artifacts/
+dumps/
+*.img
+*.img.gz
+*.img.xz
+*.img.zst
+*.iso
+*.rom
+*.dump
+*.raw
+*.wic
+*.sdcard
+
+# Vendor archives / large binary payloads
+*.rar
+*.7z
+*.tar.gz
+*.tgz
+*.zip
+
+# Local scratch
+tmp/
+temp/
+scratch/
